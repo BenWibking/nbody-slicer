@@ -50,7 +50,7 @@ def fromfile(filename):
     array = numpy.fromfile(myfile,dtype=numpy.float64,count=Nbins**3)
     padding = myfile.read(pad_size)
 
-    array.reshape((Nbins,Nbins,Nbins))
+    array = numpy.reshape(array,(Nbins,Nbins,Nbins))
 
     myfile.close()
 

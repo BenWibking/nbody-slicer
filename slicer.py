@@ -77,8 +77,8 @@ axcolor = 'lightgoldenrodyellow'
 axz = plt.axes([0.1, 0.1, 0.65, 0.03], axisbg=axcolor)
 axzwidth  = plt.axes([0.1, 0.15, 0.65, 0.03], axisbg=axcolor)
 
-sz = Slider(axfreq, 'z', 0., boxsize, valinit=10.0)
-szwidth = Slider(axamp, 'z-width', 0.1, 20.0, valinit=20.0)
+sz = Slider(axz, 'z', 0., boxsize, valinit=10.0)
+szwidth = Slider(axzwidth, 'z-width', 0.1, 20.0, valinit=20.0)
 
 def update(val):
     start = time.clock()
@@ -102,7 +102,7 @@ def update(val):
 
     f.canvas.draw_idle()
 
-sfreq.on_changed(update)
-samp.on_changed(update)
+sz.on_changed(update)
+szwidth.on_changed(update)
 
 plt.show(block=True)
