@@ -34,7 +34,9 @@ plt.ion()
 print "loading precomputed density histograms..."
 
 leftheader,lefthist = loadf77.fromfile(leftfile)
+print leftheader
 rightheader,righthist = loadf77.fromfile(rightfile)
+print rightheader
 
 print "done."
 
@@ -46,8 +48,8 @@ f, (left, right) = plt.subplots(1,2)
 plt.subplots_adjust(left=0.1, bottom=0.25)
 
 # TODO: have to determine indices of density array from zmin/zmax, xmin/max, ymin/max
-leftindex = (zmin+zmax)/2. / leftheader['boxsize'] * lefthist.shape[0]
-rightindex = (zmin+zmax)/2./ rightheader['boxsize']* righthist.shape[0]
+leftindex = (zmin+zmax)/2. / leftheader['BoxSize'] * lefthist.shape[0]
+rightindex = (zmin+zmax)/2./ rightheader['BoxSize']* righthist.shape[0]
 
 norm = matplotlib.colors.Normalize(vmin=righthist.min(), vmax=righthist.max())
 g = left.imshow(lefthist[leftindex,:,:],interpolation='none')

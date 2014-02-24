@@ -5,6 +5,7 @@
 
 import numpy
 
+pad_size = 8 # bytes
 header_size = 256 # bytes
 header_dtype = numpy.dtype([
         ('npart',(numpy.int32,6)),
@@ -30,21 +31,24 @@ header_dtype = numpy.dtype([
 def fromfile(filename):
     # use recarrays to read in header, then read in array separately
     myfile = open(filename,'rb')
-    padding = myfile.read(4)
-    Nbins_string = myfile.read(4)
-    padding = myfile.read(4)
+
+    padding = myfile.read(pad_size)
+    Nbins_string = myfile.read(numpy.dtype(numpy.int32).itemsize)
+    padding = myfile.read(pad_size)
 
     Nbins = numpy.fromstring(Nbins_string,dtype=numpy.int32)
+    print "Nbins:",Nbins
+    print "Memory needed:",numpy.dtype(numpy.float64).itemsize*float(Nbins)**3./1024./1024./1024.,"GiB"
 
-    padding = myfile.read(4)
+    padding = myfile.read(pad_size)
     header = myfile.read(header_size)
-    padding = myfile.read(4)
+    padding = myfile.read(pad_size)
 
     header_struct = numpy.fromstring(header,dtype=header_dtype)
 
-    padding = myfile.read(4)
+    padding = myfile.read(pad_size)
     array = numpy.fromfile(myfile,dtype=numpy.float64,count=Nbins**3)
-    padding = myfile.read(4)
+    padding = myfile.read(pad_size)
 
     array.reshape((Nbins,Nbins,Nbins))
 
